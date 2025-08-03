@@ -73,6 +73,8 @@ public class CommentService {
 				response.setId(comment.getId());
 				response.setContent(comment.getContent());
 				response.setAuthorName(comment.getAuthorName());
+				response.setCreationDate(comment.getCreationDate());
+				response.setPostId(comment.getPost().getId());
 				return response;
 			})
 			.collect(Collectors.toList());

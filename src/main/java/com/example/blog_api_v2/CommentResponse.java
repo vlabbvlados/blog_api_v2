@@ -4,16 +4,11 @@ package com.example.blog_api_v2;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class CommentResponse {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	private Long postId;
 	@NotBlank(message = "Field cannot be blank")
@@ -22,7 +17,6 @@ public class CommentResponse {
 	@NotBlank(message = "Field cannot be blank")
 	@Size(min = 2, max = 30)
 	private String authorName;
-	@CreationTimestamp
 	private LocalDateTime creationDate;
 	
 	

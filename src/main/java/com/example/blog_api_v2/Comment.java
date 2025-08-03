@@ -1,5 +1,9 @@
 package com.example.blog_api_v2;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +25,8 @@ public class Comment {
 	private String content;
 	@ManyToOne
 	private Post post;
+	@CreationTimestamp
+	private LocalDateTime creationDate;
 	
 	public Comment() {}
 
@@ -62,6 +68,19 @@ public class Comment {
 
 	public void setPost(Post post) {
 		this.post = post;
+	}
+
+	public Comment(LocalDateTime creationDate) {
+		super();
+		this.creationDate = creationDate;
+	}
+
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
 	}
 	
 	
