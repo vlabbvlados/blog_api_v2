@@ -2,17 +2,12 @@ package com.example.blog_api_v2;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class PostResponse {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank(message = "Field cannot be blank")
 	@Size(min = 2, max = 30)
@@ -20,7 +15,6 @@ public class PostResponse {
 	@NotBlank(message = "Field cannot be blank")
 	@Size(min = 2, max = 5000)
 	private String content;
-	@CreationTimestamp
 	private LocalDateTime creationDate;
 	private int likes;
 	

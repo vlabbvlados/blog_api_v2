@@ -43,9 +43,7 @@ public class CommentService {
 		response.setContent(comment.getContent());
 		response.setAuthorName(comment.getAuthorName());
 		response.setId(comment.getId());
-		Post post = new Post();
-		Long postId = post.getId();
-		response.setPostId(postId);
+		response.setPostId(comment.getPost().getId());
 		return response;
 	}
 	
