@@ -2,6 +2,7 @@ package com.example.blog_api_v2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,14 +26,21 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http,
+			JpaUserDetailsService jpaUserDetailsService,
+			PasswordEncoder passwordEncoder) throws Exception {
+		/* deeply
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(jpaUserDetailsService);
+		authenticationProvider.setPasswordEncoder(passwordEncoder);
+		http.authenticationProvider()
+		*/
 		http
 			.authorizeHttpRequests(authorize -> authorize
-				.anyRequest().authenticated()
-			)
-			.httpBasic(Customizer.withDefaults());
-		
-		
+					.anyRequest().authenticated()
+					)
+			.httpBasic(Customizer.withDefaults())
+			.userDetailsService(jpaUserDetailsService);
 		return http.build();
 	}
 	
