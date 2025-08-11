@@ -3,16 +3,19 @@ package com.example.blog_api_v2;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class User implements UserDetails{
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -20,12 +23,19 @@ public class User implements UserDetails{
 	@NotBlank @Size(min = 2, max = 30)
 	private String username;
 	
-	@NotBlank @Size(min = 8, max = 30)
+	@NotBlank @Size(min = 8)
 	private String password;
 	
 	private String role;
 	
 	public User() {}
+
+	
+	public User(Long id) {
+		super();
+		this.id = id;
+	}
+
 
 	public User(String username, String password, String role) {
 		super();
