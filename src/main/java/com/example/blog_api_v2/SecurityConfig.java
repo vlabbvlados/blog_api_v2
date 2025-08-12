@@ -37,10 +37,12 @@ public class SecurityConfig {
 		http.authenticationProvider()
 		*/
 		http
-			.authorizeHttpRequests(authorize -> authorize
-					.requestMatchers(HttpMethod.GET, "/posts", "/posts/**").permitAll()
+		.csrf(csrf -> csrf.disable())	
+		.authorizeHttpRequests(authorize -> authorize
 					.requestMatchers(HttpMethod.POST, "/posts").hasRole("ADMIN")
-					.requestMatchers(HttpMethod.POST, "/posts/**/comments").hasRole("USER")
+					.requestMatchers(HttpMethod.POST, "/posts/{postId}/comments").hasRole("USER")
+					.requestMatchers(HttpMethod.GET, "/posts", "/posts/{postId}").permitAll()
+					.requestMatchers(HttpMethod.GET, "/posts/{postId}/comments").permitAll()
 					.anyRequest().authenticated()
 					)
 			.httpBasic(Customizer.withDefaults())
