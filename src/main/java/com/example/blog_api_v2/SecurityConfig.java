@@ -2,6 +2,7 @@ package com.example.blog_api_v2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,6 +38,9 @@ public class SecurityConfig {
 		*/
 		http
 			.authorizeHttpRequests(authorize -> authorize
+					.requestMatchers(HttpMethod.GET, "/posts", "/posts/**").permitAll()
+					.requestMatchers(HttpMethod.POST, "/posts").hasRole("ADMIN")
+					.requestMatchers(HttpMethod.POST, "/posts/**/comments").hasRole("USER")
 					.anyRequest().authenticated()
 					)
 			.httpBasic(Customizer.withDefaults())
