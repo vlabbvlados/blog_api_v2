@@ -79,4 +79,8 @@ public class CommentService {
 			})
 			.collect(Collectors.toList());
 	}
+	
+	public CommentResponse deleteComment(Long id) {
+		return commentRepository.deleteById(id);
+	}
 }
