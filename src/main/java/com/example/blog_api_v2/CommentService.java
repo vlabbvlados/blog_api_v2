@@ -80,7 +80,7 @@ public class CommentService {
 			.collect(Collectors.toList());
 	}
 	
-	public CommentResponse deleteComment(Long id) {
-		return commentRepository.deleteById(id);
+	public void deleteComment(Long id) {
+		commentRepository.deleteById(id);
 	}
 }
