@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,7 +31,7 @@ public class CommentService {
 
 	public CommentResponse createComment(Long postId, CreateCommentRequest request) {
 		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new PostNotFoundExteption("Post not found with id: " + postId));
+				.orElseThrow(() -> new PostNotFoundException("Post not found with id: " + postId));
 		Comment newComment = new Comment();
 		newComment.setContent(request.getContent());
 		newComment.setAuthorName(request.getAuthorName());
@@ -61,7 +63,7 @@ public class CommentService {
 	
 	public List<CommentResponse> getCommentsFromPost(Long postId) {
 		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new PostNotFoundExteption("Post not found with id: " + postId));
+				.orElseThrow(() -> new PostNotFoundException("Post not found with id: " + postId));
 		List<Comment> comments = commentRepository.findByPostId(postId);
 		return mapToListCommentResponse(comments);
 	}
@@ -80,7 +82,11 @@ public class CommentService {
 			.collect(Collectors.toList());
 	}
 	
-	public void deleteComment(Long id) {
-		commentRepository.deleteById(id);
-	}
+	public CommentResponse deleteAndReturn(Long postId, Long commentId) {
+		Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
+				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
+		CommentResponse commentResponse = mapToCommentResponse(comment);
+		commentRepository.delete(comment);
+		return commentResponse;
+		}
 }
