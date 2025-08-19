@@ -89,4 +89,12 @@ public class CommentService {
 		commentRepository.delete(comment);
 		return commentResponse;
 		}
+	
+	public CommentResponse editComment(Long postId, Long commentId, CreateCommentRequest request) {
+		Comment existingComment = commentRepository.findByIdAndPostId(commentId, postId)
+				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
+		existingComment.setContent(request.getContent());
+		Comment updatedComment = commentRepository.save(existingComment);
+		return mapToCommentResponse(updatedComment);		
+	}
 }

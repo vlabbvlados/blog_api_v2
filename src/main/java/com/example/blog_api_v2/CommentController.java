@@ -65,7 +65,7 @@ public class CommentController {
 	}
 	
 	@PutMapping
-	public CommentResponse editComment(@PathVariable Long id, @RequestBody CreateCommentRequest request) {
-		return editComment(id, request);
+	public CommentResponse editComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CreateCommentRequest request) {
+		return editComment(postId, commentId, request);
 	}
 }
