@@ -82,16 +82,16 @@ public class CommentService {
 			.collect(Collectors.toList());
 	}
 	
-	public CommentResponse deleteAndReturn(Long postId, Long commentId) {
-		Comment comment = commentRepository.findByIdAndPostId(commentId, postId)
+	public CommentResponse deleteAndReturn(Long commentId) {
+		Comment comment = commentRepository.findById(commentId)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 		CommentResponse commentResponse = mapToCommentResponse(comment);
 		commentRepository.delete(comment);
 		return commentResponse;
 		}
 	
-	public CommentResponse editComment(Long postId, Long commentId, CreateCommentRequest request) {
-		Comment existingComment = commentRepository.findByIdAndPostId(commentId, postId)
+	public CommentResponse editComment(Long commentId, CreateCommentRequest request) {
+		Comment existingComment = commentRepository.findById(commentId)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 		existingComment.setContent(request.getContent());
 		Comment updatedComment = commentRepository.save(existingComment);

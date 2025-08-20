@@ -58,14 +58,14 @@ public class CommentController {
 		return commentService.getCommentsFromPost(postId);
 	}
 	
-	@DeleteMapping("/posts/{postId}/comments/{id}")
-	public ResponseEntity<CommentResponse> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
-		CommentResponse deletedComment = commentService.deleteAndReturn(postId, commentId);
+	@DeleteMapping("/posts/{postId}/comments/{commentId}")
+	public ResponseEntity<CommentResponse> deleteComment(@PathVariable Long commentId) {
+		CommentResponse deletedComment = commentService.deleteAndReturn(commentId);
 		return ResponseEntity.ok(deletedComment);
 	}
 	
-	@PutMapping
-	public CommentResponse editComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CreateCommentRequest request) {
-		return editComment(postId, commentId, request);
+	@PutMapping("/posts/{postId}/comments/{commentId}")
+	public CommentResponse editComment(@PathVariable Long commentId, @RequestBody CreateCommentRequest request) {
+		return editComment(commentId, request);
 	}
 }
