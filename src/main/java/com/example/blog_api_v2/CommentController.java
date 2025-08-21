@@ -66,6 +66,6 @@ public class CommentController {
 	
 	@PutMapping("/posts/{postId}/comments/{commentId}")
 	public CommentResponse editComment(@PathVariable Long commentId, @RequestBody CreateCommentRequest request) {
-		return editComment(commentId, request);
+		return commentService.editComment(commentId, request);
 	}
 }
