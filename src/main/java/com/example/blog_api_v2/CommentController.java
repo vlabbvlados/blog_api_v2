@@ -52,20 +52,25 @@ public class CommentController {
         });
         return errors;
     }
-	
+	//new get point for commentsId
 	@GetMapping("/posts/{postId}/comments") 
 	public List<CommentResponse> getCommentsFromPost(@PathVariable Long postId) {
 		return commentService.getCommentsFromPost(postId);
 	}
 	
+	@GetMapping("/posts/{postId}/comments/{commentId}")
+	public List<CommentResponse> getCommentFromPost(@PathVariable Long postId, @PathVariable Long commentId) {
+		return commentService.getCommentsFromPost(postId);
+	}
+	
 	@DeleteMapping("/posts/{postId}/comments/{commentId}")
-	public ResponseEntity<CommentResponse> deleteComment(@PathVariable Long commentId) {
-		CommentResponse deletedComment = commentService.deleteAndReturn(commentId);
+	public ResponseEntity<CommentResponse> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
+		CommentResponse deletedComment = commentService.deleteAndReturn(postId, commentId);
 		return ResponseEntity.ok(deletedComment);
 	}
 	
 	@PutMapping("/posts/{postId}/comments/{commentId}")
-	public CommentResponse editComment(@PathVariable Long commentId, @RequestBody CreateCommentRequest request) {
-		return commentService.editComment(commentId, request);
+	public CommentResponse editComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CreateCommentRequest request) {
+		return commentService.editComment(postId, commentId, request);
 	}
 }

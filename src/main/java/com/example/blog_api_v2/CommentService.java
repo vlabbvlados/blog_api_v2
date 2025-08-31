@@ -3,6 +3,7 @@ package com.example.blog_api_v2;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 
@@ -68,6 +70,13 @@ public class CommentService {
 		return mapToListCommentResponse(comments);
 	}
 	
+	public List<CommentResponse> getCommentFromPost(Long postId, Long commentId) {
+		Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
+				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
+		List<Comment> comments = commentRepository.findById(commentId);
+		return mapToListCommentResponse(comments);
+	}
+	
 	public List<CommentResponse> mapToListCommentResponse(List<Comment> comments) {
 		return comments.stream()
 			.map(comment -> {
@@ -82,16 +91,16 @@ public class CommentService {
 			.collect(Collectors.toList());
 	}
 	
-	public CommentResponse deleteAndReturn(Long commentId) {
-		Comment comment = commentRepository.findById(commentId)
+	public CommentResponse deleteAndReturn(Long postId, Long commentId) {
+		Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 		CommentResponse commentResponse = mapToCommentResponse(comment);
 		commentRepository.delete(comment);
 		return commentResponse;
 		}
 	
-	public CommentResponse editComment(Long commentId, CreateCommentRequest request) {
-		Comment existingComment = commentRepository.findById(commentId)
+	public CommentResponse editComment(Long postId, Long commentId, CreateCommentRequest request) {
+		Comment existingComment = commentRepository.findByPostIdAndId(postId, commentId)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 		existingComment.setContent(request.getContent());
 		Comment updatedComment = commentRepository.save(existingComment);

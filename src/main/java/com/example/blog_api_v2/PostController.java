@@ -43,4 +43,10 @@ public class PostController {
     public List<PostResponse> getAllPosts() {
     	return postService.getAllPosts();
     }
+    
+    //getMapping for postId
+    
+    //delMapping 
+    
+    //putMapping
 }
