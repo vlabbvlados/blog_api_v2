@@ -52,15 +52,15 @@ public class CommentController {
         });
         return errors;
     }
-	//new get point for commentsId
+	
 	@GetMapping("/posts/{postId}/comments") 
 	public List<CommentResponse> getCommentsFromPost(@PathVariable Long postId) {
 		return commentService.getCommentsFromPost(postId);
 	}
 	
 	@GetMapping("/posts/{postId}/comments/{commentId}")
-	public List<CommentResponse> getCommentFromPost(@PathVariable Long postId, @PathVariable Long commentId) {
-		return commentService.getCommentsFromPost(postId);
+	public CommentResponse getCommentFromPost(@PathVariable Long postId, @PathVariable Long commentId) {
+		return commentService.getCommentFromPost(postId, commentId);
 	}
 	
 	@DeleteMapping("/posts/{postId}/comments/{commentId}")

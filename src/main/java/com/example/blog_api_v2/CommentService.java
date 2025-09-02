@@ -37,6 +37,7 @@ public class CommentService {
 		Comment newComment = new Comment();
 		newComment.setContent(request.getContent());
 		newComment.setAuthorName(request.getAuthorName());
+		newComment.getCreationDate();
 		newComment.setPost(post);
 		Comment savedComment = commentRepository.save(newComment);
 		return mapToCommentResponse(savedComment);
@@ -47,6 +48,7 @@ public class CommentService {
 		response.setContent(comment.getContent());
 		response.setAuthorName(comment.getAuthorName());
 		response.setId(comment.getId());
+		response.setCreationDate(comment.getCreationDate());
 		response.setPostId(comment.getPost().getId());
 		return response;
 	}
@@ -70,11 +72,10 @@ public class CommentService {
 		return mapToListCommentResponse(comments);
 	}
 	
-	public List<CommentResponse> getCommentFromPost(Long postId, Long commentId) {
+	public CommentResponse getCommentFromPost(Long postId, Long commentId) {
 		Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
-		List<Comment> comments = commentRepository.findById(commentId);
-		return mapToListCommentResponse(comments);
+		return mapToCommentResponse(comment);
 	}
 	
 	public List<CommentResponse> mapToListCommentResponse(List<Comment> comments) {

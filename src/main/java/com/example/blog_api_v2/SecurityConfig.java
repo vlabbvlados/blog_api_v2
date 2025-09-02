@@ -41,7 +41,7 @@ public class SecurityConfig {
 		.authorizeHttpRequests(authorize -> authorize
 					.requestMatchers(HttpMethod.POST, "/posts").hasRole("ADMIN")
 					.requestMatchers(HttpMethod.DELETE, "/posts/{postId}/comments/{id}").hasRole("ADMIN")
-					.requestMatchers(HttpMethod.POST, "/posts/{postId}/comments").hasRole("USER")
+					.requestMatchers(HttpMethod.POST, "/posts/{postId}/comments").hasAnyRole("ADMIN", "USER")
 					.requestMatchers(HttpMethod.GET, "/posts", "/posts/{postId}").permitAll()
 					.requestMatchers(HttpMethod.GET, "/posts/{postId}/comments").permitAll()
 					.anyRequest().authenticated()
