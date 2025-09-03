@@ -44,9 +44,18 @@ public class PostController {
     	return postService.getAllPosts();
     }
     
-    //getMapping for postId
+    @GetMapping("/posts/{postId}")
+    public PostResponse getPostFromId(@PathVariable Long postId) {
+    	return postService.getPostFromId(postId);
+    }
     
-    //delMapping 
+    @DeleteMapping("/posts/{postId}")
+    public PostResponse delPost(@PathVariable Long postId) {
+    	return postService.delPost(postId);
+    }
     
-    //putMapping
+    @PutMapping("/posts/{postId}")
+    public PostResponse editPost(@PathVariable Long postId, @RequestBody CreatePostRequest request) {
+    	return postService.editPost(postId, request);
+    }
 }

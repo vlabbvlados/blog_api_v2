@@ -3,17 +3,13 @@ package com.example.blog_api_v2;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 
@@ -92,7 +88,7 @@ public class CommentService {
 			.collect(Collectors.toList());
 	}
 	
-	public CommentResponse deleteAndReturn(Long postId, Long commentId) {
+	public CommentResponse delComment(Long postId, Long commentId) {
 		Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 		CommentResponse commentResponse = mapToCommentResponse(comment);

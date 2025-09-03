@@ -19,21 +19,19 @@ public class PostService {
         Post postToSave = new Post();
         postToSave.setTitle(request.getTitle());
         postToSave.setContent(request.getContent());
-
         Post savedPost = postRepository.save(postToSave);
-
-        
-        PostResponse response = new PostResponse();
-        response.setId(savedPost.getId());
-        response.setTitle(savedPost.getTitle());
-        response.setContent(savedPost.getContent());
-        response.setLikes(savedPost.getLikes());
-        if (savedPost.getCreationDate() != null) {
-            response.setCreationDate(savedPost.getCreationDate());
-        }
-        return response;
+        return mapToPostResponse(savedPost);
     }
     
+    public PostResponse mapToPostResponse(Post post) {
+    	PostResponse response = new PostResponse();
+    	response.setContent(post.getContent());
+    	response.setCreationDate(post.getCreationDate());
+    	response.setId(post.getId());
+    	response.setLikes(post.getLikes());
+    	response.setTitle(post.getTitle());
+    	return response;
+    }
     
     public List<PostResponse> getAllPosts() {
         List<Post> posts = postRepository.findAll();
@@ -49,4 +47,28 @@ public class PostService {
         }
         return responses;
     }
+    
+    public PostResponse getPostFromId(Long postId) {
+    	Post post = postRepository.findById(postId)
+    			.orElseThrow(() -> new PostNotFoundException("Post not found"));
+    	return mapToPostResponse(post);
+    }
+    
+    public PostResponse delPost(Long postId) {
+    	Post post = postRepository.findById(postId)
+    			.orElseThrow(() -> new PostNotFoundException("Post not found"));
+    	PostResponse response = mapToPostResponse(post);
+    	postRepository.delete(post);
+    	return response;
+    }
+    
+    public PostResponse editPost(Long postId, CreatePostRequest request) {
+    	Post post = postRepository.findById(postId)
+    			.orElseThrow(() -> new PostNotFoundException("Post not found"));
+    	post.setContent(request.getContent());
+    	post.setTitle(request.getTitle());
+    	Post savedPost = postRepository.save(post);
+    	return mapToPostResponse(savedPost);
+    }
+    
 }
