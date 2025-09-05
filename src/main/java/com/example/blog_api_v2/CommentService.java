@@ -103,4 +103,7 @@ public class CommentService {
 		Comment updatedComment = commentRepository.save(existingComment);
 		return mapToCommentResponse(updatedComment);		
 	}
+	
+	//check username and role 
+	// Authentication = SecurityContexHolder.getContex().getAuthentication(); getName getAuthorities
 }
