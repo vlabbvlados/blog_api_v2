@@ -107,10 +107,10 @@ public class CommentService {
 		return mapToCommentResponse(updatedComment);		
 	}
 	
-	//check username and role 
-	// Authentication = SecurityContexHolder.getContex().getAuthentication(); getName getAuthorities
-	public CommentResponse checkAccess(Comment comment) {
+	
+	public void checkAccess(Comment comment) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (comment.getAuthorName() == authentication.getName() || authentication.g)
 		String authenticationName = authentication.getName();
 		
 	}
