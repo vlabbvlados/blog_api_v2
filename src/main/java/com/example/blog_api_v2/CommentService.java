@@ -94,6 +94,7 @@ public class CommentService {
 	public CommentResponse delComment(Long postId, Long commentId) {
 		Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found"));
+		checkAccess(comment);
 		CommentResponse commentResponse = mapToCommentResponse(comment);
 		commentRepository.delete(comment);
 		return commentResponse;
@@ -108,10 +109,9 @@ public class CommentService {
 	}
 	
 	
-	public void checkAccess(Comment comment) {
+	private void checkAccess(Comment comment) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (comment.getAuthorName() == authentication.getName() || authentication.g)
-		String authenticationName = authentication.getName();
-		
+		if (comment.getAuthorName() == authentication.getName() || authentication.getAuthorities().equals("ROLE_ADMIN") ) {	
+		} else new AccessDeniedException("comment not found");
 	}
 }
