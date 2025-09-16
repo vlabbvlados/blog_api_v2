@@ -111,7 +111,8 @@ public class CommentService {
 	
 	private void checkAccess(Comment comment) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (comment.getAuthorName() == authentication.getName() || authentication.getAuthorities().equals("ROLE_ADMIN") ) {	
+		if (comment.getAuthorName() == authentication.getName() || authentication.getAuthorities().stream()
+				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {	
 		} else new AccessDeniedException("comment not found");
 	}
 }
