@@ -21,11 +21,11 @@ public class PostServiceTest {
 	private PostService postService;
 	
 	@Spy
-	Post expectedPost;
+	Post entityPost;
 	
 	@Test
 	public void testFindByPostId() {
-		when(postRepository.findById(1L)).thenReturn(Optional.of(expectedPost));
+		when(postRepository.findById(1L)).thenReturn(Optional.of(entityPost));
 		Post actualPost = postService.getPostFromId(1L);
 		assertEquals(expectedPost, actualPost);
 	}
