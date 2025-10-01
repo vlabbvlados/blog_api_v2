@@ -24,9 +24,11 @@ public class PostServiceTest {
 	Post entityPost;
 	
 	@Test
-	public void testFindByPostId() {
+	public void getPostFromId() {
+		entityPost.setContent("ulala");
+		entityPost.setTitle("NAME");
 		when(postRepository.findById(1L)).thenReturn(Optional.of(entityPost));
-		Post actualPost = postService.getPostFromId(1L);
-		assertEquals(expectedPost, actualPost);
+		PostResponse actualResponse = postService.getPostFromId(1L);
+		assertEquals(expectedResponse, actualResponse);
 	}
 }
