@@ -10,11 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 
 @ExtendWith(MockitoExtension.class)
 public class PostServiceTest {
+	
 	@Mock
 	private PostRepository postRepository;
 	
@@ -35,6 +36,9 @@ public class PostServiceTest {
 		entityPost.setCreationDate(fixedDate);
 		expectedResponse.setContent("ulala");
 		expectedResponse.setTitle("NAME");
+		expectedResponse.setCreationDate(fixedDate);
+		expectedResponse.setId(1L);
+		expectedResponse.setLikes(33);
 		when(postRepository.findById(1L)).thenReturn(Optional.of(entityPost));
 		PostResponse actualResponse = postService.getPostFromId(1L);
 		assertEquals(expectedResponse, actualResponse);
