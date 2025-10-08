@@ -22,12 +22,12 @@ public class PostServiceTest {
 	@InjectMocks
 	private PostService postService;
 	
-	private Post entityPost;
 	private PostResponse expectedResponse;
 	
 	
 	@Test
 	public void getPostFromId() {
+		Post entityPost = new Post();
 		entityPost.setContent("ulala");
 		entityPost.setTitle("NAME");
 		entityPost.setId(1L);
