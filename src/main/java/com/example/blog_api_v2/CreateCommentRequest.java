@@ -1,5 +1,7 @@
 package com.example.blog_api_v2;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
@@ -33,6 +35,23 @@ public class CreateCommentRequest {
 
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(authorName, content);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CreateCommentRequest other = (CreateCommentRequest) obj;
+		return Objects.equals(authorName, other.authorName) && Objects.equals(content, other.content);
 	}
 	
 	

@@ -1,7 +1,7 @@
 package com.example.blog_api_v2;
 
 import java.time.LocalDateTime;
-
+import java.util.Objects;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -71,6 +71,24 @@ public class PostResponse {
 	public PostResponse(Long id) {
 		super();
 		this.id = id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(content, creationDate, id, likes, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PostResponse other = (PostResponse) obj;
+		return Objects.equals(content, other.content) && Objects.equals(creationDate, other.creationDate)
+				&& Objects.equals(id, other.id) && likes == other.likes && Objects.equals(title, other.title);
 	}
 	
 	

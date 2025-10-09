@@ -1,6 +1,7 @@
 package com.example.blog_api_v2;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -81,6 +82,25 @@ public class Comment {
 
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(authorName, content, creationDate, id, post);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comment other = (Comment) obj;
+		return Objects.equals(authorName, other.authorName) && Objects.equals(content, other.content)
+				&& Objects.equals(creationDate, other.creationDate) && Objects.equals(id, other.id)
+				&& Objects.equals(post, other.post);
 	}
 	
 	

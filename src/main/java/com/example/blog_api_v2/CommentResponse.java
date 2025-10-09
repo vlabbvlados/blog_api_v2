@@ -3,7 +3,7 @@ package com.example.blog_api_v2;
 
 
 import java.time.LocalDateTime;
-
+import java.util.Objects;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -75,6 +75,27 @@ public class CommentResponse {
 
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(Id, authorName, content, creationDate, postId);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CommentResponse other = (CommentResponse) obj;
+		return Objects.equals(Id, other.Id) && Objects.equals(authorName, other.authorName)
+				&& Objects.equals(content, other.content) && Objects.equals(creationDate, other.creationDate)
+				&& Objects.equals(postId, other.postId);
 	}
 	
 	

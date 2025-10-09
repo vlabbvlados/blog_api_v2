@@ -22,8 +22,6 @@ public class PostServiceTest {
 	@InjectMocks
 	private PostService postService;
 	
-	private PostResponse expectedResponse;
-	
 	
 	@Test
 	public void getPostFromId() {
@@ -34,13 +32,12 @@ public class PostServiceTest {
 		entityPost.setLikes(33);
 		LocalDateTime fixedDate = LocalDateTime.of(2025, 10, 5, 7, 0, 0);
 		entityPost.setCreationDate(fixedDate);
-		expectedResponse.setContent("ulala");
-		expectedResponse.setTitle("NAME");
-		expectedResponse.setCreationDate(fixedDate);
-		expectedResponse.setId(1L);
-		expectedResponse.setLikes(33);
 		when(postRepository.findById(1L)).thenReturn(Optional.of(entityPost));
 		PostResponse actualResponse = postService.getPostFromId(1L);
-		assertEquals(expectedResponse, actualResponse);
+		assertEquals(entityPost.getTitle(), actualResponse.getTitle());
+		assertEquals(entityPost.getContent(), actualResponse.getContent());
+		assertEquals(entityPost.getCreationDate(), actualResponse.getCreationDate());
+		assertEquals(entityPost.getId(), actualResponse.getId());
+		assertEquals(entityPost.getLikes(), actualResponse.getLikes());
 	}
 }
