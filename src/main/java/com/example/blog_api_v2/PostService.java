@@ -48,7 +48,7 @@ public class PostService {
         return responses;
     }
     
-    public PostResponse getPostFromId(Long postId) {
+    public PostResponse getPostById(Long postId) {
     	Post post = postRepository.findById(postId)
     			.orElseThrow(() -> new PostNotFoundException("Post not found"));
     	return mapToPostResponse(post);
