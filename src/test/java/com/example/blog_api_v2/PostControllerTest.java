@@ -8,8 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -23,8 +25,8 @@ public class PostControllerTest {
 	public void testGetPostById_Success() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 		.get("/posts/{postId}", 2))
-		.andExpect(status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$.title").exists())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.content").exists());
+		.andExpect(MockMvcResultMatchers.jsonPath("$.content").exists())
+		.andExpect(status().isOk());
 	}
 }

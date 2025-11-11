@@ -33,7 +33,7 @@ public class PostServiceTest {
 		LocalDateTime fixedDate = LocalDateTime.of(2025, 10, 5, 7, 0, 0);
 		entityPost.setCreationDate(fixedDate);
 		when(postRepository.findById(1L)).thenReturn(Optional.of(entityPost));
-		PostResponse actualResponse = postService.getPostFromId(1L);
+		PostResponse actualResponse = postService.getPostById(1L);
 		assertEquals(entityPost.getTitle(), actualResponse.getTitle());
 		assertEquals(entityPost.getContent(), actualResponse.getContent());
 		assertEquals(entityPost.getCreationDate(), actualResponse.getCreationDate());
