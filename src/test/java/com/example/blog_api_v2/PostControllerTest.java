@@ -24,7 +24,7 @@ public class PostControllerTest {
 	@Test
 	public void testGetPostById_Success() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-		.get("/posts/{postId}", 2))
+		.get("/posts/2"))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.title").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$.content").exists())
 		.andExpect(status().isOk());
