@@ -30,4 +30,11 @@ public class PostControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.content").exists())
 		.andExpect(status().isOk());
 	}
+	
+	@Test
+	public void testGetPostById_NotFound() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/posts/{postId}", Long.MAX_VALUE)
+				.)
+	}
 }
