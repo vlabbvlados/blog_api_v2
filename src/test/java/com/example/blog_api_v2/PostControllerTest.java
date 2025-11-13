@@ -35,6 +35,7 @@ public class PostControllerTest {
 	public void testGetPostById_NotFound() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/posts/{postId}", Long.MAX_VALUE)
-				.)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
 	}
 }
