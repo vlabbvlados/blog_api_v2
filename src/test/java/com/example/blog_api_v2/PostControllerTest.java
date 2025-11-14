@@ -9,6 +9,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -36,6 +39,8 @@ public class PostControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/posts/{postId}", Long.MAX_VALUE)
 				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound());
+				.andExpect(status().isNotFound())
+				.andExpect(result -> assertTrue(result.getResolvedException() instanceof PostNotFoundException))
+				.andExpect(result -> assertEquals("Post not found", result.getResolvedException().getMessage()));
 	}
 }
