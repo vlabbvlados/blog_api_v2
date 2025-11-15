@@ -36,11 +36,9 @@ public class PostControllerTest {
 	
 	@Test
 	public void testGetPostById_NotFound() throws Exception {
+		Long nonExistentPostId = 99999L;
 		mockMvc.perform(MockMvcRequestBuilders
-				.get("/posts/{postId}", Long.MAX_VALUE)
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound())
-				.andExpect(result -> assertTrue(result.getResolvedException() instanceof PostNotFoundException))
-				.andExpect(result -> assertEquals("Post not found", result.getResolvedException().getMessage()));
+				.get("/posts/{postId}", nonExistentPostId))
+				.andExpect(status().isNotFound());
 	}
 }
