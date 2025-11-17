@@ -41,4 +41,14 @@ public class PostControllerTest {
 				.get("/posts/{postId}", nonExistentPostId))
 				.andExpect(status().isNotFound());
 	}
+	
+	@Test
+	public void testCreatePost_Success() throws Exception {
+		Post post = new Post();
+		post.setTitle("TITLE");
+		post.setContent("CONTENT");
+		
+		
+		
+	}
 }
