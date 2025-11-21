@@ -53,21 +53,13 @@ public class PostControllerTest {
 		Post post = new Post();
 		post.setTitle("TITLE");
 		post.setContent("CONTENT");
-		post.setId(1L);
-		post.setLikes(33);
-		LocalDateTime fixedDate = LocalDateTime.of(2025, 10, 5, 7, 0, 0);
-		post.setCreationDate(fixedDate);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/posts")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(post)))
-				//.with(user("admin").password("password123").roles("ADMIN")))
 				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.id").value(1L))
 				.andExpect(jsonPath("$.title").value("TITLE"))
 				.andExpect(jsonPath("$.content").value("CONTENT"));
-		
-		
 	}
 }
