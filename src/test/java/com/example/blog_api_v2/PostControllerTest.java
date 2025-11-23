@@ -48,7 +48,6 @@ public class PostControllerTest {
 	}
 	
 	@Test
-	@WithMockUser(username = "admin", password = "password123", roles = "ADMIN")
 	public void testCreatePost_Success() throws Exception {
 		CreatePostRequest post = new CreatePostRequest();
 		post.setTitle("TITLE");
@@ -57,7 +56,8 @@ public class PostControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/posts")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(post)))
+				.content(objectMapper.writeValueAsString(post))
+				.with(user("admin").password("password123").roles("ADMIN")))
 				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$.title").value("TITLE"))
 				.andExpect(jsonPath("$.content").value("CONTENT"));
