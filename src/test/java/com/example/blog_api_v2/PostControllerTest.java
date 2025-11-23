@@ -50,7 +50,7 @@ public class PostControllerTest {
 	@Test
 	@WithMockUser(username = "admin", password = "password123", roles = "ADMIN")
 	public void testCreatePost_Success() throws Exception {
-		Post post = new Post();
+		CreatePostRequest post = new CreatePostRequest();
 		post.setTitle("TITLE");
 		post.setContent("CONTENT");
 		
