@@ -33,7 +33,8 @@ public class CommentController {
 		super();
 		this.commentService = commentService;
 	}
-
+	
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/posts/{postId}/comments")
 	public CommentResponse createComment(
 			@PathVariable Long postId,
