@@ -50,4 +50,16 @@ public class CommentControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.content").exists())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.authorName").exists());
 	}
+	
+	@Test
+	public void testDeleteComment() throws Exception {
+		Long exictingCommentId = 7L;
+		Long exictingPostId = 2L;
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.delete("/posts/{postId}/comments/{commentId}", exictingPostId, exictingCommentId)
+				.with(user("AUTHOR").roles("USER")))
+				.andExpect(status().isOk())
+				;
+	}
 }
