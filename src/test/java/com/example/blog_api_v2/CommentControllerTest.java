@@ -59,7 +59,6 @@ public class CommentControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete("/posts/{postId}/comments/{commentId}", exictingPostId, exictingCommentId)
 				.with(user("AUTHOR").roles("USER")))
-				.andExpect(status().isOk())
-				;
+				.andExpect(status().isOk());
 	}
 }
