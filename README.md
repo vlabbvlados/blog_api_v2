@@ -20,6 +20,19 @@ A REST API for a simple blog platform, allowing users to manage posts and commen
 * Centralized exception handling.
 * Automatic API documentation via Swagger UI.
 
+## Testing
+
+The project includes comprehensive integration tests for REST API endpoints using MockMvc.
+
+**Test Coverage:**
+- PostController: GET, POST with validation
+- CommentController: GET, POST, DELETE
+- PostService: Unit tests with mocked repository
+
+Run all tests:
+`mvn test`
+
+Total: 9 tests covering main API functionality.
 ## How to Run
 
 1.  Clone the repository.
