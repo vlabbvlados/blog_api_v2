@@ -111,8 +111,8 @@ public class CommentService {
 	
 	private void checkAccess(Comment comment) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (comment.getAuthorName() == authentication.getName() || authentication.getAuthorities().stream()
+		if (comment.getAuthorName().equals(authentication.getName()) || authentication.getAuthorities().stream()
 				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {	
-		} else new AccessDeniedException("comment not found");
+		} else throw new AccessDeniedException("you can't delete");
 	}
 }

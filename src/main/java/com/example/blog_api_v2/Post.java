@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,6 +27,8 @@ public class Post {
 	@CreationTimestamp
 	private LocalDateTime creationDate;
 	private int likes;
+	@ManyToOne
+	User user;
 	
 	public Post() {}
 	
@@ -78,7 +81,7 @@ public class Post {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(content, creationDate, id, likes, title);
+		return Objects.hash(content, creationDate, id, likes, title, user);
 	}
 
 	@Override
@@ -91,7 +94,16 @@ public class Post {
 			return false;
 		Post other = (Post) obj;
 		return Objects.equals(content, other.content) && Objects.equals(creationDate, other.creationDate)
-				&& Objects.equals(id, other.id) && likes == other.likes && Objects.equals(title, other.title);
+				&& Objects.equals(id, other.id) && likes == other.likes && Objects.equals(title, other.title)
+				&& Objects.equals(user, other.user);
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
