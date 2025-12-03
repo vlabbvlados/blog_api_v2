@@ -77,12 +77,13 @@ public class PostService {
     
     private void checkAccess(Post post) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	
     	if (post.getUser() == null) {
     		if (authentication.getAuthorities().stream()
-    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))); 
+    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {} 
     	} else if (post.getUser() != null) {
-    		if (post.getUser().equals(authentication.getName()) || authentication.getAuthorities().stream()
-    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))); 
+    		if (post.getUser().getUsername().equals(authentication.getName()) || authentication.getAuthorities().stream()
+    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {} 
     	} else throw new AccessDeniedException("you can't");
     	
     }

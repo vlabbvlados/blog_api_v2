@@ -73,11 +73,11 @@ public class PostControllerTest {
 	
 	@Test
 	public void testDeletePost() throws Exception {
-		Long exictingPostId = 26L;
+		Long exictingPostId = 29L;
 		
 		mockMvc.perform(MockMvcRequestBuilders 
 				.delete("/posts/{postId}", exictingPostId)
-				.with(user("admin").roles("USER")))
+				.with(user("user").roles("USER")))
 				.andExpect(status().isOk());
 	}
 }
