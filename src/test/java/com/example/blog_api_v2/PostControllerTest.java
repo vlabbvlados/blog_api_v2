@@ -70,4 +70,14 @@ public class PostControllerTest {
 				.with(user("admin").roles("ADMIN")))
 				.andExpect(status().isBadRequest());
 	}
+	
+	@Test
+	public void testDeletePost() throws Exception {
+		Long exictingPostId = 26L;
+		
+		mockMvc.perform(MockMvcRequestBuilders 
+				.delete("/posts/{postId}", exictingPostId)
+				.with(user("admin").roles("USER")))
+				.andExpect(status().isOk());
+	}
 }

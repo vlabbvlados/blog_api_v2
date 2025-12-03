@@ -1,5 +1,7 @@
 package com.example.blog_api_v2;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class PostService {
     public PostResponse delPost(Long postId) {
     	Post post = postRepository.findById(postId)
     			.orElseThrow(() -> new PostNotFoundException("Post not found"));
+    	checkAccess(post);
     	PostResponse response = mapToPostResponse(post);
     	postRepository.delete(post);
     	return response;
@@ -65,10 +68,22 @@ public class PostService {
     public PostResponse editPost(Long postId, CreatePostRequest request) {
     	Post post = postRepository.findById(postId)
     			.orElseThrow(() -> new PostNotFoundException("Post not found"));
+    	checkAccess(post);
     	post.setContent(request.getContent());
     	post.setTitle(request.getTitle());
     	Post savedPost = postRepository.save(post);
     	return mapToPostResponse(savedPost);
     }
     
+    private void checkAccess(Post post) {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	if (post.getUser() == null) {
+    		if (authentication.getAuthorities().stream()
+    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))); 
+    	} else if (post.getUser() != null) {
+    		if (post.getUser().equals(authentication.getName()) || authentication.getAuthorities().stream()
+    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))); 
+    	} else throw new AccessDeniedException("you can't");
+    	
+    }
 }
