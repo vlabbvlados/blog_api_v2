@@ -27,7 +27,7 @@ public class PostControllerTest {
 	public void testGetPostById_Success() throws Exception {
 		Long exictingPostId = 2L;
 		mockMvc.perform(MockMvcRequestBuilders
-		.get("/posts/{postId}", exictingPostId))
+			.get("/posts/{postId}", exictingPostId))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.title").exists())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.content").exists())
 			.andExpect(status().isOk());
@@ -51,7 +51,7 @@ public class PostControllerTest {
 				.post("/posts")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(post))
-				.with(user("admin").roles("ADMIN")))
+				.with(user("qwerty").roles("USER")))
 				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$.title").value("TITLE"))
 				.andExpect(jsonPath("$.content").value("CONTENT"));
@@ -73,11 +73,11 @@ public class PostControllerTest {
 	
 	@Test
 	public void testDeletePost() throws Exception {
-		Long exictingPostId = 29L;
+		Long exictingPostId = 32L;
 		
 		mockMvc.perform(MockMvcRequestBuilders 
 				.delete("/posts/{postId}", exictingPostId)
-				.with(user("user").roles("USER")))
+				.with(user("notqwerty").roles("USER")))
 				.andExpect(status().isOk());
 	}
 }

@@ -80,11 +80,13 @@ public class PostService {
     	
     	if (post.getUser() == null) {
     		if (authentication.getAuthorities().stream()
-    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {} 
+    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+    		} else throw new AccessDeniedException("you can't");
     	} else if (post.getUser() != null) {
     		if (post.getUser().getUsername().equals(authentication.getName()) || authentication.getAuthorities().stream()
-    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {} 
-    	} else throw new AccessDeniedException("you can't");
+    				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+    		} else throw new AccessDeniedException("you can't");
+    	} 
     	
     }
 }
