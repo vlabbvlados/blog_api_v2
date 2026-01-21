@@ -77,7 +77,7 @@ public class PostControllerTest {
 		
 		mockMvc.perform(MockMvcRequestBuilders 
 				.delete("/posts/{postId}", exictingPostId)
-				.with(user("notqwerty").roles("USER")))
+				.with(user("admin").roles("ADMIN")))
 				.andExpect(status().isOk());
 	}
 }

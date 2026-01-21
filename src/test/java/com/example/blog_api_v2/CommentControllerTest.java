@@ -53,7 +53,7 @@ public class CommentControllerTest {
 	
 	@Test
 	public void testDeleteComment() throws Exception {
-		Long exictingCommentId = 7L;
+		Long exictingCommentId = 17L;
 		Long exictingPostId = 2L;
 		
 		mockMvc.perform(MockMvcRequestBuilders
