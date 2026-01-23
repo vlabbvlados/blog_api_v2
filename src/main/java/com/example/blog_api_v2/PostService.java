@@ -11,16 +11,20 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-
-    public PostService(PostRepository postRepository) {
+    private final UserRepository userRepository;
+    
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public PostResponse createPost(CreatePostRequest request) {
-        
         Post postToSave = new Post();
         postToSave.setTitle(request.getTitle());
         postToSave.setContent(request.getContent());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userRepository.findByUsername(authentication)
+        		.orElseThrow(() -> new PostNotFoundException("User not found"));
         Post savedPost = postRepository.save(postToSave);
         return mapToPostResponse(savedPost);
     }
