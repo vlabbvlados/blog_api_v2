@@ -23,8 +23,8 @@ public class PostService {
         postToSave.setTitle(request.getTitle());
         postToSave.setContent(request.getContent());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userRepository.findByUsername(authentication)
-        		.orElseThrow(() -> new PostNotFoundException("User not found"));
+        userRepository.findByUsername(authentication.getName())
+        		.orElseThrow(() -> new UserNotFoundException("User not found"));
         Post savedPost = postRepository.save(postToSave);
         return mapToPostResponse(savedPost);
     }
